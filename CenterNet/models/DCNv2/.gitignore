@@ -1,0 +1,13 @@
+.vscode
+.idea
+*.so
+*.o
+*pyc
+*.pyd
+build
+DCNv2.egg-info
+dist
+vendor/
+
+
+
