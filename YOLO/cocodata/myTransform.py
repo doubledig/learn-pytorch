@@ -32,14 +32,14 @@ class MyTransform:
             img = transforms.Grayscale(num_output_channels=3)(img)
         # 水平翻转
         if torch.rand(1) < 1:
-            img = transforms.RandomHorizontalFlip(1.1)(img)
-            if len > 0:
-                boxes[:, 0::2] = w - torch.index_select(boxes, 1, torch.tensor([2, 0]))
-        # 上下翻转
-        if torch.rand(1) < self.p:
             img = transforms.RandomVerticalFlip(1.1)(img)
             if len > 0:
-                boxes[:, 1::2] = h - torch.index_select(boxes, 1, torch.tensor([3, 1]))
+                boxes[:, 0] = w - boxes[:, 0]
+        # 上下翻转
+        if torch.rand(1) < self.p:
+            img = transforms.RandomHorizontalFlip(1.1)(img)
+            if len > 0:
+                boxes[:, 1] = h - boxes[:, 1]
         # 调整大小
         img = transforms.Resize(self.size, antialias=True)(img)
         # 标签归一化
