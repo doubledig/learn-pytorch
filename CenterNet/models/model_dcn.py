@@ -62,9 +62,12 @@ class PoseResNet(nn.Module):
                      kernel_size=(3, 3), stride=1, padding=1,
                      dilation=1, deformable_groups=1)
             # bn层
-            bn = nn.BatchNorm2d(num_filters[i])
-            nn.init.constant_(bn.weight, 1)
-            nn.init.constant_(bn.bias, 0)
+            bn1 = nn.BatchNorm2d(num_filters[i])
+            nn.init.constant_(bn1.weight, 1)
+            nn.init.constant_(bn1.bias, 0)
+            bn2 = nn.BatchNorm2d(num_filters[i])
+            nn.init.constant_(bn2.weight, 1)
+            nn.init.constant_(bn2.bias, 0)
             # 反卷积层
             up = nn.ConvTranspose2d(in_channels=num_filters[i],
                                     out_channels=num_filters[i],
@@ -76,10 +79,10 @@ class PoseResNet(nn.Module):
             fill_up_weights(up)
 
             layers.append(fc)
-            layers.append(bn)
+            layers.append(bn1)
             layers.append(nn.ReLU(inplace=True))
             layers.append(up)
-            layers.append(bn)
+            layers.append(bn2)
             layers.append(nn.ReLU(inplace=True))
             inplanes = num_filters[i]
         return nn.Sequential(*layers)
@@ -90,5 +93,5 @@ class PoseResNet(nn.Module):
         ret = {}
         for head in self.heads:
             ret[head] = self.__getattr__(head)(x)
-        return [ret]
+        return ret
 

@@ -35,6 +35,6 @@ class RegL1Loss(torch.nn.Module):
         ind = t_ind.unsqueeze(2).expand(-1, -1, feat.size(2)).to(torch.int64)
         feat = feat.gather(1, ind)
         t_mask = t_mask.unsqueeze(2).expand_as(feat)
-        loss = l1_loss(feat * t_mask, t_wh * t_mask, size_average=False)
+        loss = l1_loss(feat * t_mask, t_wh * t_mask, reduction='sum')
         loss = loss / s
         return loss

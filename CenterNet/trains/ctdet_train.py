@@ -13,16 +13,15 @@ class CtdetLoss(torch.nn.Module):
         self.crit_wh = self.crit_reg
 
     def forward(self, outputs, targets):
-        outputs = outputs[0]
-        hm_loss, wh_loss, off_loss = 0, 0, 0
         # 激活归一热点图
+
         outputs['hm'] = self.hm_sigmoid(outputs['hm'])
-        hm_loss += self.crit(outputs['hm'], targets['hm'])
+        hm_loss = self.crit(outputs['hm'], targets['hm'])
         # wh_loss
-        wh_loss += self.crit_reg(outputs['wh'], targets['reg_mask'],
+        wh_loss = self.crit_reg(outputs['wh'], targets['reg_mask'],
                                  targets['ind'], targets['wh'])
 
-        off_loss += self.crit_reg(outputs['reg'], targets['reg_mask'],
+        off_loss = self.crit_reg(outputs['reg'], targets['reg_mask'],
                                   targets['ind'], targets['reg'])
 
         loss = 1 * hm_loss + 0.1 * wh_loss + 1 * off_loss

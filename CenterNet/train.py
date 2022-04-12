@@ -27,6 +27,7 @@ def train(opt):
     # 建立训练模型
     print('Creating model...')
     model = create_model(opt.backbone, opt.task)
+    model.train()
     optimizer = torch.optim.Adam(model.parameters(), opt.lr)
     start_epoch = 0
 
