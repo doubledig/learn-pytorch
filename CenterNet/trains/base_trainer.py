@@ -62,7 +62,8 @@ class BaseTrainer(object):
                 print('[Epoch %d][Iter %d/%d]'
                       '[Loss: hm_loss %.2f || wh_loss %.2f || off_loss %.2f || total %.2f || time: %.2f]'
                       % (epoch, iter_id, num_iters,
-                         loss_stats['hm_loss'], loss_stats['wh_loss'], loss_stats['off_loss'], loss, t1 - t0),
+                         loss_stats['hm_loss'].mean(), loss_stats['wh_loss'].mean(), loss_stats['off_loss'].mean(),
+                         loss, t1 - t0),
                       flush=True)
                 t0 = time.time()
             del loss, loss_stats
