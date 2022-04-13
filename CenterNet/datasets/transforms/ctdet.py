@@ -54,7 +54,7 @@ class CTTransform:
             bbox = torch.tensor(t['bbox'])
             cls_id = self.valid_ids.index(t['category_id'])
             if flipped:
-                bbox[0] = width - bbox[0] - 1 - bbox[2]
+                bbox[0] = width - bbox[0] - bbox[2]
             bbox[0] = bbox[0] / width * self.output_w
             bbox[2] = bbox[2] / width * self.output_w
             bbox[1] = bbox[1] / height * self.output_h
