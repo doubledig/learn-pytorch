@@ -57,12 +57,12 @@ def train(opt):
         save_model(os.path.join(path_to_save, 'model_last.pth'),
                    epoch, model, optimizer)
         if epoch in lr_step:
-            save_model(os.path.join(path_to_save, 'model_{}.pth'.format(epoch)),
-                       epoch, model, optimizer)
-            lr = opt.lr * (0.1**(lr_step.index(epoch)+1))
+            lr = opt.lr * (0.1 ** (lr_step.index(epoch) + 1))
             print('Drop LR to', lr)
             for param_group in optimizer.param_groups:
                 param_group['lr'] = lr
+            save_model(os.path.join(path_to_save, 'model_{}.pth'.format(epoch)),
+                       epoch, model, optimizer)
 
 
 if __name__ == '__main__':
